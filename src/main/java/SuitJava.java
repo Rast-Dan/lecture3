@@ -1,4 +1,4 @@
-public enum Suit {
+public enum SuitJava {
     //расположены по мере убывания силы
     clubs,
     diamonds,

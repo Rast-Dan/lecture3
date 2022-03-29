@@ -1,12 +1,12 @@
 import java.util.Objects;
 
-public class CardB3 implements Comparable<CardB3>{
+public class CardB3Java implements Comparable<CardB3Java>{
     private int rank;
-    private Suit suit;
+    private SuitJava suitJava;
 
-    public CardB3 (int rank, String suit){
+    public CardB3Java(int rank, String suit){
         try {
-            this.suit = Suit.valueOf(suit);
+            this.suitJava = SuitJava.valueOf(suit);
         } catch (IllegalArgumentException e){
             throw new IllegalArgumentException("Некорректное значение поля suit");
         }
@@ -18,7 +18,7 @@ public class CardB3 implements Comparable<CardB3>{
     }
 
     public String getSuit() {
-        return suit.name();
+        return suitJava.name();
     }
 
     @Override
@@ -38,28 +38,28 @@ public class CardB3 implements Comparable<CardB3>{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass() || hashCode() != o.hashCode()) return false;
-        CardB3 cardB3 = (CardB3) o;
-        return rank == cardB3.rank && suit == cardB3.suit;
+        CardB3Java cardB3Java = (CardB3Java) o;
+        return rank == cardB3Java.rank && suitJava == cardB3Java.suitJava;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rank, suit);
+        return Objects.hash(rank, suitJava);
     }
 
     /* Джокеры в колоде обычно бывают красными и черными и не привязаны к масти.
     Но чтобы не вводить цвета для джокеров, было принято решение заполнятьь поле suit для них
-    сильной мастью из черных(clubs) и из красных(diamonds).
+    сильной мастью из черных(spades) и из красных(hearts).
      */
     public boolean validate() {
-        return (rank > 0 && rank < 14) || (rank == 14 && (suit == Suit.spades || suit == Suit.hearts));
+        return (rank > 0 && rank < 14) || (rank == 14 && (suitJava == SuitJava.spades || suitJava == SuitJava.hearts));
     }
 
-    public boolean isHigher(CardB3 anotherCard) {
-        boolean isRedJoker = this.rank == 14 && suit == Suit.hearts;
-        boolean isBlackJoker = this.rank == 14 && suit == Suit.spades;
-        return ((this.suit.equals(anotherCard.suit) || (isRedJoker && anotherCard.suit == Suit.diamonds)
-                || (isBlackJoker && anotherCard.suit == Suit.clubs)) && this.rank > anotherCard.rank);
+    public boolean isHigher(CardB3Java anotherCard) {
+        boolean isRedJoker = this.rank == 14 && suitJava == SuitJava.hearts;
+        boolean isBlackJoker = this.rank == 14 && suitJava == SuitJava.spades;
+        return ((this.suitJava.equals(anotherCard.suitJava) || (isRedJoker && anotherCard.suitJava == SuitJava.diamonds)
+                || (isBlackJoker && anotherCard.suitJava == SuitJava.clubs)) && this.rank > anotherCard.rank);
     }
 
     /* В задании предполагалось использование массива, что было бы актуально для ситуации,
@@ -67,11 +67,11 @@ public class CardB3 implements Comparable<CardB3>{
      то при выполнении задания я смогла отказаться от массивов, используя индексы элементов перечисляемого типа.
      */
     @Override
-    public int compareTo(CardB3 anotherCard){
-        return (rank - anotherCard.rank) * 4 + (suit.ordinal() - anotherCard.suit.ordinal());
+    public int compareTo(CardB3Java anotherCard){
+        return (rank - anotherCard.rank) * 4 + (suitJava.ordinal() - anotherCard.suitJava.ordinal());
     }
 
-    public static int compare(CardB3 firstCard, CardB3 secondCard) {
+    public static int compare(CardB3Java firstCard, CardB3Java secondCard) {
         return firstCard.compareTo(secondCard);
     }
 
